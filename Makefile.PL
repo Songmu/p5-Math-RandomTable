@@ -2,7 +2,7 @@ use inc::Module::Install;
 name 'Math-RandomTable';
 all_from 'lib/Math/RandomTable.pm';
 
-# requires '';
+requires 'Math::Random::MT';
 
 tests 't/*.t';
 author_tests 'xt';
