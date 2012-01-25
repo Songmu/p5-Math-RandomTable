@@ -3,6 +3,32 @@ use strict;
 use warnings;
 our $VERSION = '0.01';
 
+use Math::Random::MT;
+use parent 'Exporter';
+our @EXPORT_OK = qw/generate_random_table/;
+
+sub generate {
+    my ($size, $seed) = @_;
+    $seed ||= 1;
+    my @arr = 0..$size-1;
+    _shuffle(\@arr, $seed);
+}
+
+*Math::RandomTable::generate_random_table = *Math::RandomTable::generate;
+
+# copied from List::Util::PP::shuffle and modified
+sub _shuffle {
+  my ($aa, $seed)= @_;
+  my @a = \(@$aa);
+  my $gen = Math::Random::MT->new($seed);
+  my $n;
+  my $i=@$aa;
+  map {
+    $n = $gen->rand($i--);
+    (${$a[$n]}, $a[$n] = $a[$i])[0];
+  } @$aa;
+}
+
 1;
 __END__
 
