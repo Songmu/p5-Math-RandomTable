@@ -8,10 +8,21 @@ use parent 'Exporter';
 our @EXPORT_OK = qw/generate_random_table/;
 
 sub generate {
-    my ($size, $seed) = @_;
-    $seed ||= 1;
-    my @arr = 0..$size-1;
-    _shuffle(\@arr, $seed);
+    my $args = ref $_[0] ? shift : {@_};
+    my $size    = $args->{size};
+    my $seed    = $args->{seed}   || 1;
+    my $max     = $args->{max}    || $size;
+    my $unique  = $args->{unique} // 1;
+
+    if ($unique) {
+        my @arr = 0..$max;
+        @arr = _shuffle(\@arr, $seed);
+        splice @arr, 0, $size + 1;
+    }
+    else {
+        sub { my ($size, $seed) = @_; my $mt = Math::Random::MT->new($seed); map { $mt->rand } ( 0 .. $size );}->($size, $seed);
+    }
+
 }
 
 *Math::RandomTable::generate_random_table = *Math::RandomTable::generate;
