@@ -11,16 +11,16 @@ sub generate {
     my $args = ref $_[0] ? shift : {@_};
     my $size    = $args->{size};
     my $seed    = $args->{seed}   || 1;
-    my $max     = $args->{max}    || $size;
+    my $max     = $args->{max}    || $size - 1;
     my $unique  = $args->{unique} // 1;
 
     if ($unique) {
         my @arr = 0..$max;
         @arr = _shuffle(\@arr, $seed);
-        splice @arr, 0, $size + 1;
+        splice @arr, 0, $size;
     }
     else {
-        sub { my ($size, $seed) = @_; my $mt = Math::Random::MT->new($seed); map { $mt->rand } ( 0 .. $size );}->($size, $seed);
+        sub { my ($size, $seed) = @_; my $mt = Math::Random::MT->new($seed); map { $mt->rand } ( 1 .. $size );}->($size, $seed);
     }
 
 }

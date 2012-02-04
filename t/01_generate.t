@@ -5,9 +5,9 @@ use Math::RandomTable;
 use Data::Dumper;
 
 my @arr = qw/4 8 5 6 0 7 1 2 9 3/;
-my @arr1 = Math::RandomTable::generate(size => 9, seed => 1);
-my @arr2 = Math::RandomTable::generate(size => 9, seed => 1);
-my @arr3 = Math::RandomTable::generate(size => 9, seed => 2);
+my @arr1 = Math::RandomTable::generate(size => 10, seed => 1);
+my @arr2 = Math::RandomTable::generate(size => 10, seed => 1);
+my @arr3 = Math::RandomTable::generate(size => 10, seed => 2);
 
 is scalar @arr1, 10;
 is_deeply(\@arr, \@arr1);
